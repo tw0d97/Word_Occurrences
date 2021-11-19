@@ -16,11 +16,21 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+/**
+ * This class handles the back-end of parsing and sorting words from a given website
+ * @author Tristan Wood
+ * @version 1.0
+ */
 public class WordManager {
 	
 	static ArrayList<String> wordsArray = new ArrayList<String>();
 	static ArrayList<String> occurrencesArray = new ArrayList<String>();
 	
+	/**
+	 * Sets the text of the GUI label to the String at the top of the words array,
+	 * then removes the top String.
+	 * Follows the same process for the int of how many time the word occurs.
+	 */
 	public static void makeLabel() {
 		
 		Main.wordsLabel.setText(wordsArray.get(0));
@@ -29,7 +39,9 @@ public class WordManager {
 		occurrencesArray.remove(0);
 		
 	}
-	
+	/**
+	 * Adds a label of the top 20 Strings in words array and a sum of total occurences
+	 */
 	public static void showTop20() {
 		
 			int totalOccurrences = 0;
@@ -41,7 +53,11 @@ public class WordManager {
 			Main.occurrencesLabel.setText(occurrencesString + " In Total");
 	}
 	
-	  
+	/**
+	 * Sorts the Strings in the word map based on times occurred given a URL and HTML element 
+	 * @param url uses URL as first wordMap method parameter
+	 * @param element uses element as second wordMap method parameter
+	 */ 
 	public static void countWords(String url, String element) {
 			
 			//Passes url to wordMap method
@@ -55,7 +71,11 @@ public class WordManager {
 	        	occurrencesArray.add(entry.getValue().toString());
 	        }
 	}
-	
+	/**
+	 * Parses each word in given website and HTML element by standard delimiters and returns word map of each individual occurrence of a word
+	 * @param url takes the URL of a website whose words are to be parsed into a word map
+	 * @param element takes which HTML element of the website that is to be parsed i.e. body, p.
+	 */
 	public static Map<String, Integer> wordMap(String url, String element) {
 		
 		Map<String, Integer> wordMap = new HashMap<>();
@@ -71,13 +91,11 @@ public class WordManager {
 		
 		Elements body = doc.select(element);
 		
-		// Loops through each element in body and selects text in each paragraph html tag named poem
+		// Loops through each element in body and selects text in each paragraph HTML tag named p
 		for(Element e : body.select("p")) {
 			line = e.select("p").text();
 			// Changes all text to upper case to account for case sensitivity
 			line = line.toUpperCase();
-			// I know this is bad code but it gave me errors whenever trying to replace multiple RegEx in one line
-			// Please let me know how I could improve these lines
 			line = line.replace("—", " ");
 			line = line.replace("!", "");
 			line = line.replace("”", "");
@@ -99,7 +117,11 @@ public class WordManager {
 		}
 		return wordMap;
 	}
-
+	/**
+	 * Takes the word map and sorts it into a list with key value pairs. The list is sorted by total times a word occurs in a word map
+	 * and puts the most frequently occurring word at the top with how many times it occurred as its value.
+	 * @param wordMap takes the word map that is to be sorted
+	 */
 	public static List<Entry<String, Integer>> sort(Map<String, Integer> wordMap) {
 		// Puts wordMap into entries set
 		Set<Entry<String, Integer>> entries = wordMap.entrySet();

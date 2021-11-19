@@ -17,15 +17,24 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 
+/**
+ * This class creates the GUI for which to interact the the Word Occurrences application
+ * @author Tristan Wood
+ * @version 1.0
+ */
 public class Main extends Application {
 	
 	static Text wordsLabel = new Text();
 	static Label occurrencesLabel = new Label();
 	
+	/**
+	 *  Creates GUI given specified elements in method
+	 * @param Takes object of type Stage from JavaFX
+	 */
 	@Override
 	public void start(Stage stage) {
 		try {
-			Text title = new Text("In The Raven");
+			  Text title = new Text("In The Raven");
 		      Text subHeading1 = new Text("The Word(s): ");       
 		      Text subHeading2 = new Text("Occurs: "); 
 
@@ -102,6 +111,11 @@ public class Main extends Application {
 		}
 	}
 	
+	/**
+	 * Uses word manager to gather all information needed for a successful iteration of the word occurrences application.
+	 * Calls launch to set stage GUI launch application
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		WordManager.countWords("https://www.gutenberg.org/files/1065/1065-h/1065-h.htm", "body");
 		launch(args);
