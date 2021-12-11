@@ -119,5 +119,6 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		WordManager.countWords("https://www.gutenberg.org/files/1065/1065-h/1065-h.htm", "body");
 		launch(args);
+		
 	}
 }
